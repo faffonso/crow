@@ -1,0 +1,7 @@
+# WpGen.srv
+
+bool show
+---
+CropLine left_line
+CropLine right_line
+float32[] image

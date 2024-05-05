@@ -1,0 +1,23 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "${default}",
+        "limitSymbolsToIncludedHeaders": false
+      },
+      "includePath": [
+        "/home/faffonso/Documents/ts_dev_ws/devel/include/**",
+        "/opt/ros/noetic/include/**",
+        "/home/faffonso/Documents/ts_dev_ws/src/terrasentia_navigation/controllers/ilqr/include/**",
+        "/home/faffonso/Documents/ts_dev_ws/src/terrasentia_description/terrasentia_sensors/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS",
+      "intelliSenseMode": "gcc-x64",
+      "compilerPath": "/usr/bin/gcc",
+      "cStandard": "gnu11",
+      "cppStandard": "c++14"
+    }
+  ],
+  "version": 4
+}
