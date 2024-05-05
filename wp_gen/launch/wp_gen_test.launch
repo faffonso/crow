@@ -1,0 +1,5 @@
+<launch>
+    <!-- WP Gen Server -->
+    <rosparam file="$(find wp_gen)/config/wp_gen_params.yaml" command="load"/>
+    <node pkg="wp_gen" type="wp_gen_node.py" name="wp_gen" output="screen"/>
+</launch>

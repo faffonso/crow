@@ -1,0 +1,12 @@
+<launch>
+    <!-- Open World and TS -->
+    <include file="$(find terrasentia_world)/launch/basic_world.launch"/>
+    <include file="$(find terrasentia_description)/launch/launch_default_ts3.launch"/>
+
+    <!-- RViz -->
+    <node pkg="rviz" type="rviz" name="rviz" args="-d $(find nmpc)/config/rviz/nav.rviz"/>
+
+    <!-- iLQR Node -->
+    <rosparam file="$(find ilqr)/config/ilqr_params.yaml" command="load"/>
+    <node pkg="ilqr" type="ilqr_node" name="ilqr_node" output="screen"/>
+</launch>
