@@ -2,7 +2,7 @@
 
 from __future__ import print_function
 
-from wp_gen.srv import RTInference, RTInferenceResponse, RTInferenceRequest
+from wp_gen.msg import CropLine
 
 import rospy
 from tf.transformations import euler_from_quaternion, quaternion_from_euler
@@ -48,47 +48,38 @@ class Wp_gen():
 
 
         self.odom_sub = rospy.Subscriber(odom_topic, Odometry, self.odom_callback)
+        self.line_sub = rospy.Subscriber('/terrasentia/crop_lines', CropLine, self.line_callback)
         self.goal_pub = rospy.Publisher('/terrasentia/goal', PoseStamped, queue_size=10)
 
         self.odom_msg = Odometry()
+        self.line_msg = CropLine()
         self.goal_msg = PoseStamped()
         self.goal_msg.header.frame_id = frame_id
         
         self.D = D
+        self.run_en = False
 
-        rospy.loginfo(cf.green(f"Client created!"))
+        rospy.loginfo(cf.green(f"Waypoint Generator created!"))
 
 
     def run(self, show=False, verbose=False):
-        rospy.wait_for_service('RTInference')
-        rospy.loginfo(cf.orange(f"Send request to server!"))
-
-        try:
-            service_proxy = rospy.ServiceProxy('RTInference', RTInference)
-            response = service_proxy(show)
-            rospy.loginfo(cf.yellow(f"Response received!"))
-            if (verbose == True):
-                rospy.loginfo(response)
-
-        except rospy.ServiceException as e:
-            print("Service call failed:", e)
-        
-        m1 = response.left_line.m
-        c1 = response.left_line.b
-
-        m2 = response.right_line.m
-        c2 = response.right_line.b
-
-        if (m1 == self.old_m1) and (m2 == self.old_m2):
+        if (self.run_en == False):
+            rospy.loginfo(cf.orange(f"Without new crop lines"))
             return
 
-        rospy.loginfo(cf.orange(f'Line1 m={m1}, b={c1}'))
-        rospy.loginfo(cf.orange(f'Line2 m={m2}, b={c2}'))
+    
+        rospy.loginfo(cf.green(f"New crop lines"))
+
+
+        m1 = self.line_msg.m1
+        c1 = self.line_msg.b1
+
+        m2 = self.line_msg.m2
+        c2 = self.line_msg.b2
+
+        rospy.loginfo(cf.yellow(f'Calculating waypoint (Line1 m={m1}, b={c1}; Line2 m={m2}, b={c2})'))
 
         x, y = self.get_target(m1, m2, c1, c2)
-
-        #x *= self.row_width / self.img_width
-        #y *= self.row_height / self.img_height
 
         rospy.loginfo(cf.orange(f'Y={y}, X={x}'))
 
@@ -113,11 +104,11 @@ class Wp_gen():
 
         self.goal_pub.publish(self.goal_msg)    
 
+        self.run_en = False
+
         if verbose == True:
             print(f'New waypoint x={x} y={y}, heading={heading + heading_global} -- heading{heading} + global_heading{heading_global}')    
 
-        self.old_m1 = m1
-        self.old_m2 = m2
 
     def get_target(self, m1, m2, c1, c2):
         """ 
@@ -184,6 +175,10 @@ class Wp_gen():
             rospy.logerr("Waypoint doesn't match with crop lines")
             return None
 
+
+    def line_callback(self, msg):
+        self.line_msg = msg
+        self.run_en = True
 
     def odom_callback(self, msg):
         self.odom_msg = msg
