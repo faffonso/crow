@@ -23,7 +23,6 @@ from std_msgs.msg import Float32
 from std_srvs.srv import Empty
 from sensor_msgs.msg import LaserScan
 
-from wp_gen.srv import RTInference, RTInferenceResponse, RTInferenceRequest
 from wp_gen.msg import CropLine
 
 from sensor_msgs.msg import Image
@@ -66,16 +65,15 @@ class RTinference:
         # Set up the ROS subscriber
         self.data = None
         rospy.init_node('RTinference_node')
-        rospy.Subscriber('/terrasentia/scan', LaserScan, self.lidar_callback)
+        rospy.Subscriber('/terrasentia/scan', LaserScan, self.lidar_callback, buff_size = 2**28)
 
-        self.pub = rospy.Publisher('/lidar_plot', Image, queue_size=10)
+
+        self.pub = rospy.Publisher('/lidar_plot', Image, queue_size=1)
+        self.line_pub = rospy.Publisher('/terrasentia/crop_lines', CropLine, queue_size=1)
+        
         self.bridge = CvBridge()
 
-        # Set up the ROS service server
-        rospy.Service('RTInference', RTInference, self.rt_inference_service)
-        rospy.loginfo(cf.green("Server is ready to receive requests"))
-
-        rate = rospy.Rate(16)
+        rate = rospy.Rate(5)
         while not rospy.is_shutdown():
             try:
                 self.run()
@@ -89,14 +87,32 @@ class RTinference:
         self.data = data
 
     def run(self):
+        crop_msg = CropLine()
+
         if self.data is not None: # check for consistency
+
+            start_time = rospy.Time.now() 
+
             self.generate_image(self.data)
             self.image, raw_image = self.get_image()
 
-            self.response = self.inference(self.image)
+            crop_lines = self.inference(self.image)
+            crop_msg.m1 = crop_lines[0]
+            crop_msg.m2 = crop_lines[1]
+            crop_msg.b1 = crop_lines[2]
+            crop_msg.b2 = crop_lines[3]
 
-            ros_image = self.plot(self.response, raw_image)
-            self.pub.publish(ros_image)
+            ros_image = self.plot(crop_lines, raw_image)
+
+            end_time = rospy.Time.now() # tempo final
+            elapsed_time = (end_time - start_time).to_sec() * 1000
+
+            if (elapsed_time > 500):
+                print(cf.red(f"Max time ({elapsed_time})"))
+                self.pub.publish(ros_image)
+                return
+
+            self.line_pub.publish(crop_msg)
 
     def rt_inference_service(self, req):
         rospy.loginfo(cf.yellow(f"Received request {req}"))
