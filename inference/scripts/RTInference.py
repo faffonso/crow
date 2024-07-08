@@ -28,7 +28,8 @@ from wp_gen.msg import CropLine
 from sensor_msgs.msg import Image
 from cv_bridge import CvBridge
 
-device = torch.device("cpu")
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+print(device)
 
 ############ GLOBAL PARAMS ############
 global runid
@@ -65,7 +66,7 @@ class RTinference:
         # Set up the ROS subscriber
         self.data = None
         rospy.init_node('RTinference_node')
-        rospy.Subscriber('/terrasentia/scan', LaserScan, self.lidar_callback, buff_size = 2**28)
+        rospy.Subscriber('/scan', LaserScan, self.lidar_callback, buff_size = 2**28)
 
 
         self.pub = rospy.Publisher('/lidar_plot', Image, queue_size=1)
@@ -304,7 +305,7 @@ class RTinference:
         m2 = response[1]
         b1 = response[2]
         b2 = response[3]
-
+	print('plot init')
         # Calculate the endpoints of the line
         x11 = 0
         y11 = int(m1 * x11 + b1)
@@ -324,6 +325,7 @@ class RTinference:
         x22 = raw_image.shape[1]  # Width of the image
         y22 = int(m2 * x22 + b2)
 
+	print('plot end')
         cv2.line(raw_image, (x21, y21), (x22, y22), line_color, line_thickness)
 
         #image_np = np.squeeze(raw_image) #.detach().cpu().numpy())
