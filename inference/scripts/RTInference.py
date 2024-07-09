@@ -305,27 +305,29 @@ class RTinference:
         m2 = response[1]
         b1 = response[2]
         b2 = response[3]
-	print('plot init')
-        # Calculate the endpoints of the line
-        x11 = 0
-        y11 = int(m1 * x11 + b1)
 
-        x12 = raw_image.shape[1]  # Width of the image
-        y12 = int(m1 * x12 + b1)
+        try: 
+            # Calculate the endpoints of the line
+            x11 = 0
+            y11 = int(m1 * x11 + b1)
 
-        # Draw the line on the image
-        line_color = (0, 0, 255)  
-        line_thickness = 2
-        cv2.line(raw_image, (x11, y11), (x12, y12), line_color, line_thickness)
+            x12 = raw_image.shape[1]  # Width of the image
+            y12 = int(m1 * x12 + b1)
 
-        # Calculate the endpoints of the line
-        x21 = 0
-        y21 = int(m2 * x21 + b2)
+            # Draw the line on the image
+            line_color = (0, 0, 255)  
+            line_thickness = 2
+            cv2.line(raw_image, (x11, y11), (x12, y12), line_color, line_thickness)
 
-        x22 = raw_image.shape[1]  # Width of the image
-        y22 = int(m2 * x22 + b2)
+            # Calculate the endpoints of the line
+            x21 = 0
+            y21 = int(m2 * x21 + b2)
 
-	print('plot end')
+            x22 = raw_image.shape[1]  # Width of the image
+            y22 = int(m2 * x22 + b2)
+        except Exception as e: 
+            print('Error RTInference (float -> int):', e)
+
         cv2.line(raw_image, (x21, y21), (x22, y22), line_color, line_thickness)
 
         #image_np = np.squeeze(raw_image) #.detach().cpu().numpy())
