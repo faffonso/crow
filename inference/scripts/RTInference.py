@@ -13,6 +13,8 @@ from sensor_msgs.msg import LaserScan, Image
 from wp_gen.msg import CropLine
 from cv_bridge import CvBridge
 
+from std_srvs.srv import Trigger
+
 class RTInference:
     def __init__(self):
         rospy.init_node('RTinference_node')
@@ -44,6 +46,12 @@ class RTInference:
         self.data = None
         self.response = [0.0, 0.0, 0.0, 0.0] 
         self.lidar_sub = rospy.Subscriber(self.scan_topic, LaserScan, self.lidar_callback, buff_size=2**28)
+
+        # Service to start and stop the recording
+        rospy.wait_for_service('/data_recording/start_recording')
+        self.start_recording = rospy.ServiceProxy('/data_recording/start_recording', Trigger)
+
+        self.start_recording()
 
         rate = rospy.Rate(5)
         while not rospy.is_shutdown():

@@ -6,6 +6,6 @@ wp_gen/img:
   D: 1.0            # Waypoint Distance [m]
 
 wp_gen/odom:
-  topic: "/terrasentia/will/odom"
-  frame_id: "terrasentia/will/odom"
+  topic: "/terrasentia/odom"
+  frame_id: "terrasentia/odom"
 
