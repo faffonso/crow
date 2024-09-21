@@ -39,7 +39,7 @@ iLQR::iLQR(ros::NodeHandle nh, Dynamics* dynamic, Cost* cost,
 
     _T = MatrixXd(3, 3);
 
-    nh.getParam("/odom/frame_id", _odom_topic);
+    nh.getParam("/odom/topic", _odom_topic);
     nh.getParam("/odom/frame_id", _frame_id);
 
     nh.getParam("/controller/iLQR/max_iter", _max_iter);
@@ -108,7 +108,7 @@ void iLQR::run()
 
     _path_msg.header.stamp = ros::Time::now();
     _path_msg.header.frame_id = _frame_id;
-
+    pose.header.frame_id = _frame_id;
 
     for (int n=0; n<_N; n++)
     {
