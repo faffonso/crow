@@ -1,8 +1,12 @@
 # CROW: A Self-Supervised Crop Row Navigation Algorithm for Agricultural Fields
 
-<div style="text-align: center;">
-    <img src="assets/ts.png" alt="alt text" width="400"/>
-</div>
+<table>
+  <tr>
+    <td align="center">
+      <img src="assets/ts.png" alt="alt text" width="500"/>
+    </td>
+  </tr>
+</table>
 
 ## Overview
 
