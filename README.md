@@ -3,14 +3,15 @@
 
 ## Overview
 
-This repository provides an implementation of the paper
+This repository provides an implementation of the paper:
 
 
-> [**CROW: A Self-Supervised Crop Row Navigation Algorithm for Agricultural Fields**](),  
-> Francisco Affonso, Felipe Andrade G. Tommaselli1, Gianluca Capezzuto, Mateus V. Gasparino, Girish Chowdhary, Marcelo Becker,
+> [**CROW: A Self-Supervised Crop Row Navigation Algorithm for Agricultural Fields**](),    
+> Francisco Affonso, Felipe Andrade G. Tommaselli1, Gianluca Capezzuto,     
+> Mateus V. Gasparino, Girish Chowdhary, Marcelo Becker,  
 > *Paper at ?*  
 
-CROW is a navigation system designed for agricultural fields, specifically for operation under crop canopies. The system begins with a perception module that employs a self-supervised neural network to identify crop lines from LiDAR data. Based on this information, waypoints are generated for a Model Predictive Controller (MPC) to follow the crop lines, ensuring the system remains on the reference path.
+We introduce CROW, a navigation system tailored for agricultural fields, specifically for operation under crop canopies. The system starts with a perception module that utilizes a self-supervised neural network to detect crop lines from LiDAR data. Using this information, waypoints are generated for a Model Predictive Controller (MPC), allowing the system to follow the crop lines and maintain its position on the reference path.
 
 The code is organized into navigation modules, each accompanied by a brief explanation of how to use them individually and how to modify the parameters in the configuration files:
 
