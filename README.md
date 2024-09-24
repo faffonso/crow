@@ -41,6 +41,7 @@ If you find our work useful in your research, please consider citing our publica
 The requirements are not strict hard requirements, but there may be some differences in performance or compatibility (not tested).
 
 - Linux - Ubuntu 20.04
+- ROS Noetic
 - Python3
 - CUDA
 
@@ -61,3 +62,40 @@ pip3 install -r requirements.txt
 
 If you prefer not to use a virtual environment, you can install the dependencies directly from `requirements.txt`.
 
+
+## System Execution
+
+This repository does not include the robot (TerraSentia) or the world environment (plantations) used in the paper. To run the code in a suitable environment, you will need a robot equipped with a 2D LiDAR. For the plantation environment, we recommend using the open-source repository [Virtual Maize Field](https://github.com/FieldRobotEvent/virtual_maize_field/tree/6896db468cec98af7a9a7ee83fdbb89a34da1816).
+
+### Steps to Run the Code:
+
+Once the environment is set up, follow these steps
+
+1. **Run the perception node**:  
+   Open a terminal and execute the following command:
+
+   ```bash
+   rosrun inference RTInference.py
+   ```
+
+2. **Run the waypoint generator and controller**
+    
+    In another terminal, run:
+
+    ```
+    roslaunch ilqr nav.launch
+    ```
+
+The system will begin controlling the robot towards the generated waypoints. You can visualize the process in RViz. If the waypoint generator or controller isn't performing robustly, you may need to adjust the parameters
+
+#### Notes
+
+- If you want to run the system without a suitable environment, you can proceed with the steps above as-is.
+- The system's navigation modules can be customized through the respective config files, as previously mentioned.
+
+## Experimental Results
+
+
+## License
+
+This code is released under the [MIT](https://opensource.org/license/mit) for academic usage.
