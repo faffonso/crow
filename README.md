@@ -1,8 +1,8 @@
 # CROW: A Self-Supervised Crop Row Navigation Algorithm for Agricultural Fields
 
-<p align="center">
-  <img src="assets/ts.png" alt="alt text" width="500"/>
-</p>
+<div style="text-align: center;">
+    <img src="assets/ts.png" alt="alt text" width="400"/>
+</div>
 
 ## Overview
 
@@ -96,9 +96,28 @@ The system will begin controlling the robot towards the generated waypoints. You
 
 - If you want to run the system without a suitable environment, you can proceed with the steps above as-is.
 - The system's navigation modules can be customized through the respective config files, as previously mentioned.
-- For more information about the Perception network training (self-supervised), please refer to the [training perception](training%20perception/README.md) section.
 
 ## Experimental Results
+
+<div style="text-align: center;">
+    <img src="assets/results.png" alt="alt text" width="650"/>
+</div>
+
+We conducted six experiments at the Illinois Autonomous Farm (University of Illinois Urbana-Champaign) using 115-meter crop rows, as illustrated by the GPS/RTK trajectories in the figure above. An accompanying image shows the condition of the crops on the date of the experiments. The table below provides details on collisions that occurred during the experiments and the time taken to traverse each row.
+
+<div align="center">
+
+| Run # | Coll. | Av. Dist. p/ Coll. [m] | Traj. Time [s] |
+|-------|-------|------------------------|----------------|
+| 1     | 5     | 23.00                  | 235            |
+| 2     | 4     | 28.75                  | 245            |
+| 3     | 0     | -                      | 155            |
+| 4     | 1     | 115.0                  | 172            |
+| 5     | 4     | 28.75                  | 252            |
+| 6     | 6     | 19.17                  | 278            |
+| **Average** | **3.33** | **34.5** | **222.83** |
+
+</div>
 
 
 ## License
