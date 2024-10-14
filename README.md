@@ -10,7 +10,7 @@ This repository provides an implementation of the paper:
 
 
 > [**CROW: A Self-Supervised Crop Row Navigation Algorithm for Agricultural Fields**](),    
-> Francisco Affonso, Felipe Andrade G. Tommaselli1, Gianluca Capezzuto,     
+> Francisco Affonso, Felipe Andrade G. Tommaselli, Gianluca Capezzuto,     
 > Mateus V. Gasparino, Girish Chowdhary, Marcelo Becker,  
 > *Paper at ?*  
 
@@ -30,13 +30,7 @@ The code is organized into navigation modules, each accompanied by how to modify
 If you find our work useful in your research, please consider citing our publication:
 
 ```bibtex
-@inproceedings{affonso023navigating,
-    title={Navigating with finesse: Leveraging neural network-based lidar perception and ilqr control for intelligent agriculture robotics},
-    author={Pinto, Francisco Affonso and Tommaselli, Felipe Andrade G and Gasparino, Mateus V and Becker, Marcelo},
-    booktitle={2023 Latin American Robotics Symposium (LARS), 2023 Brazilian Symposium on Robotics (SBR), and 2023 Workshop on Robotics in Education (WRE)},
-    pages={502--507},
-    year={2023},
-    organization={IEEE}
+@inproceedings{
 }
 ```
 
