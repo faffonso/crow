@@ -101,7 +101,7 @@ The system will begin controlling the robot towards the generated waypoints. You
 ## Experimental Results
 
 <p align="center">
-    <img src="assets/results.png" alt="alt text" width="600"/>
+    <img src="assets/results.png" alt="alt text" width="800"/>
 </p>
 
 We conducted six experiments at the Illinois Autonomous Farm (University of Illinois Urbana-Champaign) using 115-meter crop rows, as illustrated by the GPS/RTK trajectories in the figure above. An accompanying image shows the condition of the crops on the date of the experiments. The table below provides details on collisions that occurred during the experiments and the time taken to traverse each row.
