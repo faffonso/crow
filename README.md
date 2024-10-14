@@ -16,7 +16,7 @@ This repository provides an implementation of the paper:
 
 We introduce CROW, a navigation system tailored for agricultural fields, specifically for operation under crop canopies. The system starts with a perception module that utilizes a self-supervised neural network to detect crop lines from LiDAR data. Using this information, waypoints are generated for a Model Predictive Controller (MPC), allowing the system to follow the crop lines and maintain its position on the reference path.
 
-The code is organized into navigation modules, each accompanied by a brief explanation of how to use them individually and how to modify the parameters in the configuration files:
+The code is organized into navigation modules, each accompanied by how to modify the parameters in the configuration files:
 
 - **Inference:** LiDAR-Based Perception 
 - **Wp_gen:** Waypoint Generator
@@ -100,13 +100,13 @@ The system will begin controlling the robot towards the generated waypoints. You
 
 ## Experimental Results
 
-<div style="text-align: center;">
-    <img src="assets/results.png" alt="alt text" width="650"/>
-</div>
+<p align="center">
+    <img src="assets/results.png" alt="alt text" width="600"/>
+</p>
 
 We conducted six experiments at the Illinois Autonomous Farm (University of Illinois Urbana-Champaign) using 115-meter crop rows, as illustrated by the GPS/RTK trajectories in the figure above. An accompanying image shows the condition of the crops on the date of the experiments. The table below provides details on collisions that occurred during the experiments and the time taken to traverse each row.
 
-<p align="center">
+<div align="center">
 
 | Run # | Coll. | Av. Dist. p/ Coll. [m] | Traj. Time [s] |
 |-------|-------|------------------------|----------------|
@@ -117,8 +117,7 @@ We conducted six experiments at the Illinois Autonomous Farm (University of Illi
 | 5     | 4     | 28.75                  | 252            |
 | 6     | 6     | 19.17                  | 278            |
 | **Average** | **3.33** | **34.5** | **222.83** |
-
-</p>
+</div>
 
 
 ## License
