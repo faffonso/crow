@@ -54,9 +54,141 @@ At the moment, the system is in the process of training the network, with the fo
 | Inference time | 32.77 ms |
 
 
+## Hyperparameters
+
+For reproducibility, the following hyperparameters were used:
+
+| Network Training | Hyperparameters |
+|--------|-------|
+| Learning rate ($lr$) | 0.009 |
+| Batch Size ($batch_size$) | 140 |
+| Scheduler Step Size ($step\_size$) | 8 |
+| Scheduler Gamma ($gamma$)  | 0.4 |
+| Epochs ($epochs$) | 50 |
+| Weight Decay ($weight\_decay$)| 0.0 |
+
+The MobileNet V2 was used as an encoder, with the final layers modified to meet the output of 4 values (from the equations of the line). The optimizer used was Adam, with the parameters mentioned above. The loss function used was the L1 Loss.
+
+## Dataset Generation Parameters
+
+The above table displays the complete list of parameters used to generate the train and test datasets discussed in this work. The training dataset consists of 21,108 images, while the test dataset contains 11,440 images in total.
+
+<table style="width:52%; margin:auto; border-collapse:collapse;">
+  <caption></caption>
+  <thead>
+    <tr>
+      <th>Parameter</th>
+      <th>Train Dataset</th>
+      <th>Test Dataset</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>RANGE_1</td><td>-25</td><td>-25</td></tr>
+    <tr><td>RANGE_2</td><td>26</td><td>26</td></tr>
+    <tr><td>STEP</td><td>1</td><td>1</td></tr>
+    <tr><td>BOUND_1</td><td>400</td><td>300</td></tr>
+    <tr><td>BOUND_2</td><td>600</td><td>350</td></tr>
+    <tr><td>DIVIDER_1a</td><td>30</td><td>40</td></tr>
+    <tr><td>DIVIDER_1b</td><td>50</td><td>60</td></tr>
+    <tr><td>DIVIDER_2a</td><td>35</td><td>50</td></tr>
+    <tr><td>DIVIDER_2b</td><td>60</td><td>80</td></tr>
+    <tr><td>DIVIDER_LIM</td><td>100</td><td>100</td></tr>
+    <tr><td>DB_D1a</td><td>30</td><td>50</td></tr>
+    <tr><td>DB_D1b</td><td>70</td><td>80</td></tr>
+    <tr><td>DB_D2a</td><td>30</td><td>50</td></tr>
+    <tr><td>DB_D2b</td><td>70</td><td>70</td></tr>
+    <tr><td>DB_BOUND1</td><td>5</td><td>5</td></tr>
+    <tr><td>DB_BOUND2</td><td>7</td><td>7</td></tr>
+    <tr><td>DB_RANGE1</td><td>image_size//15</td><td>image_size//15</td></tr>
+    <tr><td>DB_RANGE2</td><td>(6*image_size)//10</td><td>(6*image_size)//10</td></tr>
+    <tr><td>DB_COLOR</td><td>black</td><td>black</td></tr>
+    <tr><td>DT_CLUST1</td><td>4</td><td>4</td></tr>
+    <tr><td>DT_CLUST2</td><td>15</td><td>22</td></tr>
+    <tr><td>DT_POINTS</td><td>2</td><td>2</td></tr>
+    <tr><td>DT_BOUND1</td><td>2</td><td>2</td></tr>
+    <tr><td>DT_BOUND2</td><td>10</td><td>10</td></tr>
+    <tr><td>DT_RANGE1</td><td>2*image_size//3</td><td>2*image_size//3</td></tr>
+    <tr><td>DT_RANGE2</td><td>image_size</td><td>image_size</td></tr>
+    <tr><td>DT_COLOR</td><td>black</td><td>black</td></tr>
+    <tr><td>F1_CLUST1</td><td>3</td><td>5</td></tr>
+    <tr><td>F1_CLUST2</td><td>10</td><td>18</td></tr>
+    <tr><td>F1_POINTS</td><td>3</td><td>4</td></tr>
+    <tr><td>F1_BOUND1</td><td>8</td><td>8</td></tr>
+    <tr><td>F1_BOUND2</td><td>18</td><td>18</td></tr>
+    <tr><td>F1_RANGE1</td><td>(image_size//8)</td><td>0</td></tr>
+    <tr><td>F1_RANGE2</td><td>(image_size//5)</td><td>(image_size//5)</td></tr>
+    <tr><td>F1_COLOR</td><td>black</td><td>black</td></tr>
+    <tr><td>F2_CLUST1</td><td>1</td><td>1</td></tr>
+    <tr><td>F2_CLUST2</td><td>4</td><td>4</td></tr>
+    <tr><td>F2_POINTS</td><td>5</td><td>5</td></tr>
+    <tr><td>F2_BOUND1</td><td>50</td><td>50</td></tr>
+    <tr><td>F2_BOUND2</td><td>51</td><td>51</td></tr>
+    <tr><td>F2_CENTRAL1</td><td>image_size//12</td><td>image_size//12</td></tr>
+    <tr><td>F2_CENTRAL2</td><td>image_size//5</td><td>image_size//5</td></tr>
+    <tr><td>F2_COLOR</td><td>black</td><td>black</td></tr>
+    <tr><td>FC_LIM</td><td>20</td><td>15</td></tr>
+    <tr><td>FC_D1a</td><td>3</td><td>20</td></tr>
+    <tr><td>FC_D1b</td><td>50</td><td>75</td></tr>
+    <tr><td>FC_D2a</td><td>3</td><td>15</td></tr>
+    <tr><td>FC_D2b</td><td>40</td><td>55</td></tr>
+    <tr><td>FC_BOUND1</td><td>30</td><td>30</td></tr>
+    <tr><td>FC_BOUND2</td><td>35</td><td>35</td></tr>
+    <tr><td>FC_RANGE1</td><td>image_size//6</td><td>image_size//6</td></tr>
+    <tr><td>FC_RANGE2</td><td>image_size</td><td>image_size</td></tr>
+    <tr><td>FC_COLOR</td><td>black</td><td>black</td></tr>
+    <tr><td>RND_RANGE1</td><td>0</td><td>0</td></tr>
+    <tr><td>RND_RANGE2</td><td>30</td><td>40</td></tr>
+    <tr><td>RND_COLOR</td><td>black</td><td>black</td></tr>
+  </tbody>
+</table>
+
+
+
+**The full understanding of the parameters usage can be best comprehended in the Scripts section, following the indications.** For now, some intuitions can be extracted to better characterize these datasets by analyzing the parameters with similar functions. Each prefix in the table corresponds to one of the nuclei sections in Paper explanation. The full relation is:
+
+- **DB (Data Bottom):**  
+  This region, indicated by the black area in **Fig. \ref{fig:ADColors}**, is referred to as "Data" since it serves as the primary source of information for inference. The reference lines (in red) are located within this area, and points tend to cluster around them.
+
+- **DT (Data Top):**  
+  This parameter refers to the data at the top of the image, specifically the gray region, which behaves similarly to DB, as points tend to accumulate as residuals from the main lines. The data typically originates from distant points, such as those in the center of the row (e.g., leaves). Although this data is often not very useful, there is some correlation between these points and the main lines. Generally, this region can be viewed as noise distortion that deviates from the DB region.
+
+- **F1 (Foreground 1):**  
+  This parameter refers to the distortion (noise) at the bottom of the image, highlighted as the orange region in **Fig. \ref{fig:ADColors}**. This area is termed "Foreground" due to the accumulation of points near the LiDAR. Points in this region may originate from various sources, such as the robot's parts near the LiDAR or leaves close to the center of the lane. Typically, this data is not useful for inference.
+
+- **F2 (Foreground 2):**  
+  This is the second type of Foreground distortion. The primary concept behind F1 and F2 is to ensure the region is as heterogeneous as possible, with these two subregions overlapping.
+
+- **FC (Far Center):**  
+  This region refers to the adjacent green lines. The "Far Center" notation is noteworthy due to the variety of shapes these lines can take. When the robot approaches the limit angles, these lines may exhibit significant distortion.
+
+- **RND (Random):**  
+  The final parameter family defines the Random Noise distributed across the entire image, with its key contribution being the abstraction resulting from data degeneration.
+
+
+The **suffix list** categorizes parameters into distinct groups, which can be divided as follows:
+
+- **RANGE:**  
+  This parameter suffix represents ranges in general, usually from `RANGE1` to `RANGE2`. In most cases, these parameters are used to delimit the Y-axis region.
+
+- **BOUND:**  
+  This suffix determines the region boundaries used to create the delimiter for the distribution.
+
+- **CLUSTER:**  
+  This parameter family generates a clustering effect using the Normal Distribution Function, where the number of points in each cluster is normally distributed around the cluster center. The goal is to create small clusters of points that simulate a LiDAR reading.
+
+- **LIM:**  
+  This suffix is employed when plotting adjacent lines within the green area of the flowchart (FC). The `LIM` parameter denotes the threshold characterizing the degree of inclination permissible for the lines to influence point placement. When the lines exhibit significant inclination, the adjacent lines on the inclined side become suppressed, requiring the boundaries on the opposing side to expand accordingly.
+
+- **COLOR:**  
+  The `COLOR` parameter family changes the plot color for better region visualization, primarily for debugging purposes.
+
+
+
 ## Installation
 
 ### Dependencies
+
+> Please note that the following dependencies are required only for training the perception module. For the complete project setup, refer to the full documentation.
 
 ``` shell
 sudo apt install python3.8
