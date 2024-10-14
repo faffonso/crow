@@ -96,6 +96,7 @@ The system will begin controlling the robot towards the generated waypoints. You
 
 - If you want to run the system without a suitable environment, you can proceed with the steps above as-is.
 - The system's navigation modules can be customized through the respective config files, as previously mentioned.
+- For more information about the Perception network training (self-supervised), please refer to the [training perception](training%20perception/README.md) section.
 
 ## Experimental Results
 
