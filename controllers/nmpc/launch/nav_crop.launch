@@ -1,0 +1,11 @@
+<launch>
+    <!-- NMPC Node -->
+    <rosparam file="$(find nmpc)/config/nmpc_params.yaml" command="load"/>
+    <node pkg="nmpc" type="nmpc_node.py" name="nmpc_node"/>
+
+    <!-- RViz -->
+    <node pkg="rviz" type="rviz" name="rviz" args="-d $(find nmpc)/config/rviz/nav.rviz"/>
+
+    <!-- Wp Gen -->
+    <include file="$(find wp_gen)/launch/wp_gen_test.launch" />
+</launch>

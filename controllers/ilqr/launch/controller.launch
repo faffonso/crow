@@ -1,0 +1,17 @@
+<launch>
+    <!-- RViz -->
+    <node pkg="rviz" type="rviz" name="rviz" args="-d $(find nmpc)/config/rviz/nav.rviz"/>
+
+    <!-- iLQR Node -->
+    <rosparam file="$(find ilqr)/config/ilqr_params.yaml" command="load"/>
+    <node pkg="ilqr" type="ilqr_node" name="ilqr_node" output="screen"/>
+
+    <group ns="data_recording">
+        <rosparam command="load" file="$(find data_recording)/config/config.yaml" />
+    </group>
+
+    <node name="data_recording" pkg="data_recording" type="data_recording.py" output="screen">
+        <param name="output_directory" value="$(find data_recording)/../../recorded_bags" />
+        <param name="rosbag_prefix" value="crow" />
+    </node>
+</launch>

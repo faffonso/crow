@@ -1,0 +1,10 @@
+<launch>
+    <!-- WP Gen Server -->
+    <node pkg="inference" type="RTInference.py" name="RTInference" output="screen">
+        <param name="model_path" value="$(find inference)/models/"/>
+    </node>
+    
+    <rosparam file="$(find wp_gen)/config/wp_gen_params.yaml" command="load"/>
+    
+    <node pkg="wp_gen" type="wp_gen_node.py" name="wp_gen" output="screen"/>
+</launch>

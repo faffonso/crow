@@ -1,0 +1,11 @@
+wp_gen/img:
+  row_height: 3.5   # [m]
+  row_width: 4.0    # [m]
+  img_height: 244   # [px]
+  img_width: 244    # [px]
+  D: 1.0            # Waypoint Distance [m]
+
+wp_gen/odom:
+  topic: "/terrasentia/odom"
+  frame_id: "terrasentia/odom"
+

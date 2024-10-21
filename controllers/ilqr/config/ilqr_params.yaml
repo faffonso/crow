@@ -1,0 +1,42 @@
+## iterative Linear Quatratic Regulator
+
+controller/iLQR:
+  # Prediction Params
+  N:      &N  15
+  dt:     &dt 0.1
+  v_ref:      0.2
+
+  # Optimization Params
+  shoot_fac:  0.1     # Exponential factor (exp(fac*x))
+  max_iter:   50      # Max iterations of fit function
+  tol:        0.01    # Min tolerance for convergence
+
+controller/cost: 
+  N: *N
+  
+  # Weight Matrices
+  Qf_x:     5.0
+  Qf_y:     5.0
+  Qf_theta: 1.0
+
+  Q_x:      1.0
+  Q_y:      1.0
+  Q_theta:  2.5
+
+  R_v:      0.1
+  R_omega:  0.5
+
+  v_max:      0.8
+  omega_max:  0.5
+
+  eps: 100
+  t: 100
+
+controller/dynamics:
+  dt: *dt
+  model: "error-tracking"
+
+## Odometry Params
+odom:
+  topic: "/terrasentia/odom"
+  frame_id: "terrasentia/odom"
