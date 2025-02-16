@@ -1,4 +1,4 @@
-# IC_NN_LIDAR: Data
+# Data
 
 > This package contain the raw data used to train the Neural Network. This data can be generated artificially or recorded from the field in real life and in simulation.
 
