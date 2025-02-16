@@ -17,11 +17,3 @@ This folder contains the implementation of the iLQR (Iterative Linear Quadratic 
 ### Overview of iLQR
 
 The iLQR controller is a gradient-based optimization method that solves for the optimal control trajectory by iteratively minimizing a quadratic approximation of the system’s cost function. It is particularly suited for navigation tasks like crop row following, where precision is critical. 
-
-### How to Run
-1. To launch the iLQR controller, run the following command:
-   ```bash
-   roslaunch ilqr nav.launch
-    ```
-
-This will start the iLQR controller, which uses the generated waypoints to control the robot’s navigation along the crop rows.

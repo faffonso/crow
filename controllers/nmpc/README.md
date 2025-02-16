@@ -15,11 +15,3 @@ This folder contains the implementation of the NMPC (Non-linear Model Predictive
 ### Overview of NMPC
 
 The NMPC controller solves the non-linear optimal control problem at each timestep, predicting the future trajectory and determining the optimal set of control actions to follow the crop rows. It handles complex dynamics and constraints, providing real-time performance for navigating agricultural environments.
-
-### How to Run
-1. To launch the NMPC controller, run the following command:
-   ```bash
-   roslaunch nmpc nav.launch
-    ```
-
-This will start the NMPC controller and initiate the robot's navigation through the crop rows using the generated waypoints.

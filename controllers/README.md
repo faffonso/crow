@@ -5,9 +5,9 @@ The **Controllers** folder contains the core control algorithms used in the CROW
 ## Overview
 
 ### iLQR (Iterative Linear Quadratic Regulator)
-iLQR is a gradient-based optimization algorithm that computes an optimal trajectory by minimizing a quadratic approximation of the system’s cost function. It iteratively adjusts control inputs to ensure that the robot stays on the desired path while respecting dynamic constraints. This approach is well-suited for tasks that require precision, such as navigating narrow crop rows, and performs efficiently in real-time environments.
+iLQR is a gradient-based optimization algorithm that computes an optimal trajectory by minimizing a quadratic approximation of the system's cost function. It iteratively refines control inputs to keep the robot on the desired path while adhering to dynamic constraints. This approach is particularly effective as a Model Predictive Control (MPC) solver, enabling real-time optimization for action control solutions in dynamic environments.
 
 ### NMPC (Non-linear Model Predictive Control)
-NMPC is a more general and flexible control method that solves non-linear optimization problems at each time step. It predicts the future trajectory of the robot by accounting for non-linear dynamics and constraints, making it ideal for handling complex scenarios encountered in agricultural navigation. NMPC can adapt to dynamic environments, providing robust control even under challenging conditions like uneven terrain or crop variability.
+NMPC is a more general and flexible control strategy that formulates nonlinear optimization problems. By incorporating nonlinear dynamics and constraints, it predicts the robot's future trajectory, making it particularly effective for handling complex scenarios such as agricultural navigation. Since our approach leverages iLQR, we developed a parallel package that utilizes traditional methods like IPOPT to solve the NMPC formulation, serving as a baseline for performance comparison.
 
  > Please explore further the iLQR and NMPC folders for detailed information on each controller's structure, files, and how to run them.

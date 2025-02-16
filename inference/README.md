@@ -26,10 +26,3 @@ Without the accurate detection of crop rows provided by the inference system, th
 4. **Navigation**: The waypoints are sent to the robot’s waypoint generator and control systems, enabling smooth and efficient navigation along the crop rows.
 
 By continuously processing data and generating waypoints, the inference system ensures that the robot remains on course, avoiding obstacles and adapting to the dynamic environment of the agricultural field.
-
-### How to Run
-To run the real-time inference script, execute the following command:
-
-```bash
-rosrun inference RTInference.py
-```
