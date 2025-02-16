@@ -1,4 +1,4 @@
-# IC_NN_LIDAR: Src (Source)
+# Scripts Training Perception Module
 
 > This package contains the "source/script" of the project. The files in this folder are basically about the **training** of the Neural Network models. 
 

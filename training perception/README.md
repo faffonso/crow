@@ -253,4 +253,3 @@ python3 main.py
     [11] K. Holkar and L. M. Waghmare, “An overview of model predictive control,” International Journal of control and automation, vol. 3, no. 4, pp. 47–63, 2010.
 
     [12] E. Kayacan and G. Chowdhary, “Tracking error learning control for precise mobile robot path tracking in outdoor environment,” CoRR, vol. abs/2103.11282, 2021.
-

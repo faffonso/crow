@@ -6,13 +6,13 @@
 
 ## Overview
 
-This repository provides an implementation of the paper:
+This repository provides the **official implementation** of the paper:
 
 
-> [**CROW: A Self-Supervised Crop Row Navigation Algorithm for Agricultural Fields**](),    
+> [**CROW: A Self-Supervised Crop Row Navigation Algorithm for Agricultural Fields**](https://link.springer.com/article/10.1007/s10846-025-02219-2),    
 > Francisco Affonso, Felipe Andrade G. Tommaselli, Gianluca Capezzuto,     
 > Mateus V. Gasparino, Girish Chowdhary, Marcelo Becker,  
-> *Paper at ?*  
+> *Published in Journal of Intelligent & Robotic Systems, 2025*  
 
 We introduce CROW, a navigation system tailored for agricultural fields, specifically for operation under crop canopies. The system starts with a perception module that utilizes a self-supervised neural network to detect crop lines from LiDAR data. Using this information, waypoints are generated for a Model Predictive Controller (MPC), allowing the system to follow the crop lines and maintain its position on the reference path.
 
@@ -24,13 +24,20 @@ The code is organized into navigation modules, each accompanied by how to modify
     - **NMPC:** Non-linear Model Predictive Controller solved using IPOPT 
     - **iLQR:** Non-linear Model Predictive Controller solved using Constrained iLQR
 
+All datasets and trained models used in this work are [fully available online](https://drive.google.com/drive/folders/1IeAhgs2SlV-Fgol1CqfxPrg_Yv2mBH2O).
 
 ## Citation
 
 If you find our work useful in your research, please consider citing our publication:
 
 ```bibtex
-@inproceedings{
+@article{AffonsoTommaselli2025,
+  title={CROW: A Self-Supervised Crop Row Navigation Algorithm for Agricultural Fields},
+  author={Affonso, Francisco and Tommaselli, Felipe Andrade G. and Capezzuto, Gianluca and Gasparino, Mateus V. and Chowdhary, Girish and Becker, Marcelo},
+  journal={Journal of Intelligent \& Robotic Systems},
+  year={2025},
+  publisher={Springer}z
+  doi={10.1007/s10846-025-02219-2}
 }
 ```
 
