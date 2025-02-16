@@ -9,7 +9,7 @@
 This repository provides the **official implementation** of the paper:
 
 
-> [**CROW: A Self-Supervised Crop Row Navigation Algorithm for Agricultural Fields**](),    
+> [**CROW: A Self-Supervised Crop Row Navigation Algorithm for Agricultural Fields**](https://link.springer.com/article/10.1007/s10846-025-02219-2),    
 > Francisco Affonso, Felipe Andrade G. Tommaselli, Gianluca Capezzuto,     
 > Mateus V. Gasparino, Girish Chowdhary, Marcelo Becker,  
 > *Published in Journal of Intelligent & Robotic Systems, 2025*  
@@ -36,8 +36,8 @@ If you find our work useful in your research, please consider citing our publica
   author={Affonso, Francisco and Tommaselli, Felipe Andrade G. and Capezzuto, Gianluca and Gasparino, Mateus V. and Chowdhary, Girish and Becker, Marcelo},
   journal={Journal of Intelligent \& Robotic Systems},
   year={2025},
-  doi={10.1007/s10846-025-02219-2},
-  url={https://link.springer.com/article/10.1007/s10846-025-02219-2}
+  publisher={Springer}z
+  doi={10.1007/s10846-025-02219-2}
 }
 ```
 
