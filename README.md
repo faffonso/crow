@@ -33,10 +33,11 @@ If you find our work useful in your research, please consider citing our publica
 ```bibtex
 @article{AffonsoTommaselli2025,
   title={CROW: A Self-Supervised Crop Row Navigation Algorithm for Agricultural Fields},
-  author={Francisco Affonso and Felipe Andrade G. Tommaselli and Gianluca Capezzuto and Mateus V. Gasparino and Girish Chowdhary and Marcelo Becker},
+  author={Affonso, Francisco and Tommaselli, Felipe Andrade G. and Capezzuto, Gianluca and Gasparino, Mateus V. and Chowdhary, Girish and Becker, Marcelo},
   journal={Journal of Intelligent \& Robotic Systems},
   year={2025},
-  doi={10.1007/s10846-025-02219-2}
+  doi={10.1007/s10846-025-02219-2},
+  url={https://link.springer.com/article/10.1007/s10846-025-02219-2}
 }
 ```
 
