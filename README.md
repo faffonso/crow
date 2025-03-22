@@ -36,7 +36,7 @@ If you find our work useful in your research, please consider citing our publica
   author={Affonso, Francisco and Tommaselli, Felipe Andrade G. and Capezzuto, Gianluca and Gasparino, Mateus V. and Chowdhary, Girish and Becker, Marcelo},
   journal={Journal of Intelligent \& Robotic Systems},
   year={2025},
-  publisher={Springer}z
+  publisher={Springer},
   doi={10.1007/s10846-025-02219-2}
 }
 ```
