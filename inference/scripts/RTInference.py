@@ -35,12 +35,15 @@ print(device)
 global runid
 runid = '06-04-2024_21-22-37'
 
-os.chdir('..')
-print(os.getcwd())
+
+runid = '06-04-2024_21-22-37'
+
 
 class RTinference:
     def __init__(self):
         print('init...')
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        print(f"Running on {self.device}")
 
         ########## MODEL LOAD ##########
         self.load_model()
@@ -66,7 +69,7 @@ class RTinference:
         # Set up the ROS subscriber
         self.data = None
         rospy.init_node('RTinference_node')
-        rospy.Subscriber('/scan', LaserScan, self.lidar_callback, buff_size = 2**28)
+        rospy.Subscriber('scan', LaserScan, self.lidar_callback, buff_size = 2**28)
 
 
         self.pub = rospy.Publisher('/lidar_plot', Image, queue_size=1)
@@ -86,7 +89,7 @@ class RTinference:
     ############### ROS INTEGRATION ###############
     def lidar_callback(self, data):
         self.data = data
-
+        
     def run(self):
         crop_msg = CropLine()
 
@@ -110,9 +113,8 @@ class RTinference:
 
             if (elapsed_time > 500):
                 print(cf.red(f"Max time ({elapsed_time})"))
-                self.pub.publish(ros_image)
-                return
 
+            self.pub.publish(ros_image)
             self.line_pub.publish(crop_msg)
 
     def rt_inference_service(self, req):
@@ -147,18 +149,20 @@ class RTinference:
         torch.nn.Linear(512, 3)
         )
 
-        path = os.getcwd() + '/models/' + 'model_' + runid + '.pth'
+        path = os.path.join(os.path.expanduser('~'), 'model_' + runid + '.pth')
         checkpoint = torch.load(path, map_location='cpu')  # Load to CPU
         self.model.load_state_dict(checkpoint)
+        self.model.to(self.device)
         self.model.eval()
 
     ############### DATA EXTRACTION ###############
-    def read_params_from_json(self, filename='./models/params.json', query_id=None):
-        if os.getcwd() == 'scripts':
-            os.chdir('..')
+    def read_params_from_json(self, filename=None, query_id=None):
+        if filename is None:
+            filename = os.path.join(os.path.expanduser('~'), 'params.json')
         try:
             with open(filename, 'r') as file:
                 data = json.load(file)
+                print(f'data: {data}')
                 for item in data:
                     if query_id is not None and item['id'] == query_id:
                         result_dict = {
@@ -222,6 +226,8 @@ class RTinference:
             plt.savefig('temp_image')
 
 
+
+
     def get_image(self):
         image = cv2.imread("temp_image.png")
 
@@ -242,7 +248,7 @@ class RTinference:
         image = np.expand_dims(image, axis=0)
 
         # convert to torch
-        image = torch.from_numpy(image).float()
+        image = torch.from_numpy(image).float().to(self.device)
         return image, raw_image
 
     ############### INFERENCE AND PLOT ##############
@@ -261,6 +267,7 @@ class RTinference:
         
         # correct different format inputs
         predictions = predictions.to('cpu').cpu().detach().numpy().tolist()[0]
+        print('predictions: ', predictions)
         if len(predictions) == 3:
             w1, q1, q2 = predictions
             w2 = w1
@@ -306,34 +313,44 @@ class RTinference:
         b1 = response[2]
         b2 = response[3]
 
-        try: 
-            # Calculate the endpoints of the line
+        try:
+            # Check for valid values
+            if not np.isfinite([m1, m2, b1, b2]).all():
+                raise ValueError("Line parameters contain NaN or Inf")
+
+            # Calculate the endpoints of the line 1
             x11 = 0
             y11 = int(m1 * x11 + b1)
 
             x12 = raw_image.shape[1]  # Width of the image
             y12 = int(m1 * x12 + b1)
 
-            # Draw the line on the image
+            # Draw line 1
             line_color = (0, 0, 255)  
             line_thickness = 2
             cv2.line(raw_image, (x11, y11), (x12, y12), line_color, line_thickness)
 
-            # Calculate the endpoints of the line
+            # Calculate the endpoints of the line 2
             x21 = 0
             y21 = int(m2 * x21 + b2)
 
             x22 = raw_image.shape[1]  # Width of the image
             y22 = int(m2 * x22 + b2)
-        except Exception as e: 
-            print('Error RTInference (float -> int):', e)
+            
+            # Draw line 2
+            cv2.line(raw_image, (x21, y21), (x22, y22), line_color, line_thickness)
 
-        cv2.line(raw_image, (x21, y21), (x22, y22), line_color, line_thickness)
+        except Exception as e: 
+            # Only print error if it's not the expected NaNs during initialization/transitions
+            if "NaN" not in str(e):
+                print('Error RTInference plot:', e)
 
         #image_np = np.squeeze(raw_image) #.detach().cpu().numpy())
         ros_image = self.bridge.cv2_to_imgmsg(raw_image, encoding="passthrough")
 
         return ros_image
+
+
 
 ############### MAIN ###############
 

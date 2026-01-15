@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<launch>
+    <!-- Real Robot MPC Launch File -->
+    <!-- Launches: terrasentia_navigation, perception_node_kp, rowfollow_predicted, reference_path_publisher, mpc_node -->
+
+    <arg name="robot_ns" default="terrasentia"/>
+
+    <!-- Include terrasentia_navigation launch file (IMU, motion_cmd, TFs, ZED, Livox, DLIO) -->
+    <!-- <include file="$(find terrasentia_navigation)/launch/terrasentia_navigation.launch"/> -->
+
+    <group ns="$(arg robot_ns)">
+
+        <node pkg="inference" type="RTInference.py" name="RTInference" output="screen"/>
+
+        <!-- iLQR Node -->
+        <!-- <rosparam file="$(find ilqr)/config/ilqr_params.yaml" command="load"/>
+        <node pkg="ilqr" type="ilqr_node" name="ilqr_node" output="screen"/> -->
+
+    </group>
+
+    <!-- ROSBAG RECORDING -->
+    <arg name="enable_recording" default="true"/>
+    <arg name="bag_name" default="$(env HOME)/terra_crow"/>
+    
+    <arg name="record_topics"
+        value="/tf
+               /tf_static
+               /terrasentia/cmd_vel
+               /terrasentia/motion_command
+               /terrasentia/imu
+               /terrasentia/livox/lidar
+               /terrasentia/dlio/odom_node/odom
+               /terrasentia/zed2i/zed_node/rgb/camera_info
+               /terrasentia/zed2i/zed_node/rgb/image_rect_color/compressed
+               /terrasentia/zed2i/zed_node/depth/camera_info
+               /terrasentia/zed2i/zed_node/depth/depth_registered"/>
+
+    <node if="$(arg enable_recording)" name="rosbag_record" pkg="rosbag" type="record" 
+          args="--lz4 -o $(arg bag_name) $(arg record_topics)" output="log"/>
+
+</launch>
