@@ -4,7 +4,7 @@ controller/iLQR:
   # Prediction Params
   N:      &N  15
   dt:     &dt 0.1
-  v_ref:      0.2
+  v_ref:      0.9
 
   # Optimization Params
   shoot_fac:  0.1     # Exponential factor (exp(fac*x))
@@ -14,20 +14,22 @@ controller/iLQR:
 controller/cost: 
   N: *N
   
-  # Weight Matrices
-  Qf_x:     5.0
-  Qf_y:     5.0
-  Qf_theta: 1.0
+  # Weight Matrices (Terminal Step - Final Goal)
+  Qf_x:     5.0     # larger, more aggressive (final x precision)
+  Qf_y:     5.0     # larger, more aggressive (final y precision)
+  Qf_theta: 1.0     # larger, more aggressive (final heading precision)
 
-  Q_x:      1.0
-  Q_y:      1.0
-  Q_theta:  2.5
+  # Weight Matrices (Running Step - Path Tracking)
+  Q_x:      5.0     # larger, more aggressive (path tracking x)
+  Q_y:      5.0     # larger, more aggressive (path tracking y)
+  Q_theta:  2.5     # larger, more aggressive (path tracking heading)
 
-  R_v:      0.1
-  R_omega:  0.5
+  # Control Costs (Smoothing)
+  R_v:      2.0     # larger, less aggressive (smoother linear accel)
+  R_omega:  0.5     # larger, less aggressive (smoother angular accel)
 
-  v_max:      0.8
-  omega_max:  0.5
+  v_max:      0.9
+  omega_max:  1.0
 
   eps: 100
   t: 100
@@ -38,5 +40,5 @@ controller/dynamics:
 
 ## Odometry Params
 odom:
-  topic: "/terrasentia/will/odom"
-  frame_id: "/terrasentia/will/odom"
+  topic: "/terrasentia/dlio/odom_node/odom"
+  frame_id: "odom"
