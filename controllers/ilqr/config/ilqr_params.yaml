@@ -20,12 +20,12 @@ controller/cost:
   Qf_theta: 1.0     # larger, more aggressive (final heading precision)
 
   # Weight Matrices (Running Step - Path Tracking)
-  Q_x:      5.0     # larger, more aggressive (path tracking x)
-  Q_y:      5.0     # larger, more aggressive (path tracking y)
-  Q_theta:  2.5     # larger, more aggressive (path tracking heading)
+  Q_x:      2.0     # larger, more aggressive (path tracking x)
+  Q_y:      2.0     # larger, more aggressive (path tracking y)
+  Q_theta:  1.0     # larger, more aggressive (path tracking heading)
 
   # Control Costs (Smoothing)
-  R_v:      2.0     # larger, less aggressive (smoother linear accel)
+  R_v:      0.1     # larger, less aggressive (smoother linear accel)
   R_omega:  0.5     # larger, less aggressive (smoother angular accel)
 
   v_max:      0.9

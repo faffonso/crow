@@ -54,7 +54,7 @@ iLQR::iLQR(ros::NodeHandle nh, Dynamics* dynamic, Cost* cost,
     _goal_msg.pose.position.y = 0.0;
     _goal_msg.pose.orientation.w = 1.0;
 
-    _goal_sub = _nh.subscribe("terrasentia/goal", 10, &iLQR::_goal_callback, this);
+    _goal_sub = _nh.subscribe("/terrasentia/goal", 10, &iLQR::_goal_callback, this);
     _odom_sub = _nh.subscribe(_odom_topic, 10, &iLQR::_odom_callback, this);
 
     _path_pub = nh.advertise<nav_msgs::Path>("/terrasentia/path", 5);

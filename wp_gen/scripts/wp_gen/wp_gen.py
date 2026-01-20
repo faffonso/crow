@@ -95,7 +95,7 @@ class Wp_gen():
         self.goal_msg.pose.position.x = self.odom_msg.pose.pose.position.x + x * np.sin(heading_global) + y * np.cos(heading_global)
         self.goal_msg.pose.position.y = self.odom_msg.pose.pose.position.y - (x * np.cos(heading_global) - y * np.sin(heading_global))
 
-        q = quaternion_from_euler(0.0, 0.0, - heading + heading_global)
+        q = quaternion_from_euler(0.0, 0.0, + heading + heading_global)
 
         self.goal_msg.pose.orientation.x = q[0]
         self.goal_msg.pose.orientation.y = q[1]
