@@ -26,8 +26,8 @@ int main(int argc, char** argv)
     if (!init_cost(cost, nh))
         return 1; 
 
-    nh.getParam("/controller/dynamics/dt", dt);
-    nh.getParam("/controller/cost/N", N);
+    nh.getParam("controller/dynamics/dt", dt);
+    nh.getParam("controller/cost/N", N);
 
     iLQR control(nh, &dynamic, &cost,
                 dt, N);

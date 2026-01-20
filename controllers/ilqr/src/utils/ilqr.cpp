@@ -39,14 +39,14 @@ iLQR::iLQR(ros::NodeHandle nh, Dynamics* dynamic, Cost* cost,
 
     _T = MatrixXd(3, 3);
 
-    nh.getParam("/odom/frame_id", _odom_topic);
-    nh.getParam("/odom/frame_id", _frame_id);
+    nh.getParam("odom/topic", _odom_topic);
+    nh.getParam("odom/frame_id", _frame_id);
 
-    nh.getParam("/controller/iLQR/max_iter", _max_iter);
-    nh.getParam("/controller/iLQR/tol", _tol);
+    nh.getParam("controller/iLQR/max_iter", _max_iter);
+    nh.getParam("controller/iLQR/tol", _tol);
 
-    nh.getParam("/controller/iLQR/v_ref", _v_ref);
-    nh.getParam("/controller/iLQR/shoot_fac", _shoot);
+    nh.getParam("controller/iLQR/v_ref", _v_ref);
+    nh.getParam("controller/iLQR/shoot_fac", _shoot);
   
     _odom_msg.pose.pose.orientation.w = 1.0;
 
@@ -125,16 +125,26 @@ void iLQR::run()
     _path_pub.publish(_path_msg);
     _path_msg.poses.clear();
 
+    _cmd_vel_msg.header.stamp = ros::Time::now();
+    _cmd_vel_msg.header.frame_id = "odom";
     _cmd_vel_msg.twist.linear.x = _us(0, 0);
     _cmd_vel_msg.twist.angular.z = _us(0, 1);
 
     _cmd_vel_pub.publish(_cmd_vel_msg);
     _time_pub.publish(_time_msg);
 
-    //ROS_INFO_STREAM("Run iLQR | State " << _x0(0) << " " << _x0(1) << " " << _x0(2) << 
-    //                        " | Reference " << _xref(0) << " " << _xref(1) << " " << _xref(2) << 
-    //                        " | Action control " << _us(0, 0) << " " << _us(0, 1 ) << 
-    //Z                        " | Time " << ros::Time::now() - init << " seconds");
+    // DEBUG: Diagnose velocity decay issue
+    double goal_dist = sqrt(pow(_xref(0) - _x(0), 2) + pow(_xref(1) - _x(1), 2));
+    double error_norm = sqrt(pow(_x0(0), 2) + pow(_x0(1), 2));
+    ROS_INFO_STREAM("[iLQR DEBUG] "
+                    << "Odom: (" << _x(0) << ", " << _x(1) << ", " << odom_heading << ") | "
+                    << "Goal: (" << _xref(0) << ", " << _xref(1) << ", " << _xref(2) << ") | "
+                    << "GoalDist: " << goal_dist << " | "
+                    << "Error_x0: (" << _x0(0) << ", " << _x0(1) << ", " << _x0(2) << ") | "
+                    << "ErrorNorm: " << error_norm << " | "
+                    << "v_ref: " << _v_ref << " | "
+                    << "Cmd: (v=" << _us(0, 0) << ", w=" << _us(0, 1) << ") | "
+                    << "Cost: " << _J);
 }
 
 void iLQR::fit(MatrixXd us)
@@ -195,7 +205,7 @@ void iLQR::fit(MatrixXd us)
         regu = std::min(std::max(regu, min_regu), max_regu);
     }
 
-    //ROS_INFO_STREAM("Final fit | Cost " << _J <<  " | Final State " << _xs(_N, 0) << " " <<  _xs(_N, 1) << " " << _xs(_N, 2) << " | Iter " << iter << " | Regu " << regu);
+    ROS_INFO_STREAM("[iLQR FIT] Cost: " << _J << " | FinalState: (" << _xs(_N, 0) << ", " << _xs(_N, 1) << ", " << _xs(_N, 2) << ") | Iter: " << iter << " | Regu: " << regu);
     
     // ROS_INFO_STREAM(_xs);
     // ROS_INFO_STREAM(_us);
@@ -368,6 +378,11 @@ double iLQR::_get_heading(geometry_msgs::Pose pose)
 
 void iLQR::_goal_callback(const geometry_msgs::PoseStamped::ConstPtr& msg)
 {
+    static ros::Time last_goal_time = ros::Time::now();
+    ros::Time now = ros::Time::now();
+    double dt_goal = (now - last_goal_time).toSec();
+    ROS_INFO_STREAM("[iLQR GOAL CB] New goal received | dt_since_last: " << dt_goal << "s | pos=(" << msg->pose.position.x << ", " << msg->pose.position.y << ")");
+    last_goal_time = now;
     _goal_msg = *msg;
 }
 

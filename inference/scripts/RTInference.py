@@ -267,7 +267,7 @@ class RTinference:
         
         # correct different format inputs
         predictions = predictions.to('cpu').cpu().detach().numpy().tolist()[0]
-        print('predictions: ', predictions)
+        
         if len(predictions) == 3:
             w1, q1, q2 = predictions
             w2 = w1

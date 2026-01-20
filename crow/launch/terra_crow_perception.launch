@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<launch>
+    <!-- Real Robot MPC Launch File -->
+    <!-- Launches: terrasentia_navigation, perception_node_kp, rowfollow_predicted, reference_path_publisher, mpc_node -->
+
+    <arg name="robot_ns" default="terrasentia"/>
+
+    <!-- Include terrasentia_navigation launch file (IMU, motion_cmd, TFs, ZED, Livox, DLIO) -->
+    <!-- <include file="$(find terrasentia_navigation)/launch/terrasentia_navigation.launch"/> -->
+
+    <group ns="$(arg robot_ns)">
+
+        <node pkg="inference" type="RTInference.py" name="RTInference" output="screen"/>
+
+    </group>
+
+
+</launch>

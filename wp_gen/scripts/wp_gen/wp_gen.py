@@ -104,6 +104,13 @@ class Wp_gen():
 
         self.goal_pub.publish(self.goal_msg)    
 
+        # DEBUG: Track goal publishing for velocity decay diagnosis
+        rospy.loginfo(cf.cyan(f'[WP_GEN DEBUG] Published goal: '
+                              f'pos=({self.goal_msg.pose.position.x:.3f}, {self.goal_msg.pose.position.y:.3f}), '
+                              f'heading={-heading + heading_global:.3f} | '
+                              f'odom=({self.odom_msg.pose.pose.position.x:.3f}, {self.odom_msg.pose.pose.position.y:.3f}) | '
+                              f'local_target=(x={x:.3f}, y={y:.3f})'))
+
         self.run_en = False
 
         if verbose == True:

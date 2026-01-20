@@ -10,11 +10,13 @@
 
     <group ns="$(arg robot_ns)">
 
-        <node pkg="inference" type="RTInference.py" name="RTInference" output="screen"/>
+        <!-- <node pkg="inference" type="RTInference.py" name="RTInference" output="screen"/> -->
+        <rosparam file="$(find wp_gen)/config/wp_gen_params.yaml" command="load"/>
+        <node pkg="wp_gen" type="wp_gen_node.py" name="wp_gen_node" output="screen"/>
 
         <!-- iLQR Node -->
-        <!-- <rosparam file="$(find ilqr)/config/ilqr_params.yaml" command="load"/>
-        <node pkg="ilqr" type="ilqr_node" name="ilqr_node" output="screen"/> -->
+        <rosparam file="$(find ilqr)/config/ilqr_params.yaml" command="load"/>
+        <node pkg="ilqr" type="ilqr_node" name="ilqr_node" output="screen"/>
 
     </group>
 
@@ -25,6 +27,11 @@
     <arg name="record_topics"
         value="/tf
                /tf_static
+               /lidar_plot
+               /terrasentia/crop_lines
+               /terrasentia/goal
+               /terrasentia/ilqr_time
+               /terrasentia/path
                /terrasentia/cmd_vel
                /terrasentia/motion_command
                /terrasentia/imu
